@@ -50,7 +50,9 @@ class MenuCategoriesController extends Controller
     public function destroy($id)
     {
         $category = MenuCategory::findOrFail($id);
-        $category->destroy();
+        $category->delete();
+
+        return redirect()->back();
     }
 
     private function getMenuCategories()

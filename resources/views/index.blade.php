@@ -2,8 +2,6 @@
 <html lang="en">
 
 
-<!-- Mirrored from demo.jmkumaresh.com/prasto/preview/001/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 08 May 2016 02:51:27 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=utf-8"/><!-- /Added by HTTrack -->
 <head>
 
@@ -52,7 +50,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.html')}}">
 
     <!--[if lt IE 9]>
-    <script src="{{ asset('js/vendor/html5-3.6-respond-1.4.2.min.js')}}"></script>
+    <script src="{!! asset('js/vendor/html5-3.6-respond-1.4.2.min.js')!!}"></script>
     <![endif]-->
 </head>
 
@@ -70,15 +68,15 @@
 <!-- Off canvas menu starts -->
 <div class="off-canvas-menu">
     <a class="menu-btn" id="hamburger"><span></span></a>
-    <nav class="pushy pushy-right main-menu">
+    <nav class="pushy pushy-right main-menu" style="background: #1A1915;">
         <a class="close-btn menu-btn"><i class="icon icon-cross"></i></a>
-        <a class="brand" href="#home"><img src="images/logo.png" alt="" class="img-responsive"></a>
+        <a class="brand" href="#home"><img src="{{ asset('images/logo.jpg') }}" alt="" class="img-responsive"></a>
         <ul class="list-unstyled menu-items" id="menu-items">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About us</a></li>
             <li><a href="#our-menu">Our Menu</a></li>
             <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#blog">Blog</a></li>
+            {{--<li><a href="#blog">Blog</a></li>--}}
             <li><a href="#reservation">Reservation</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -102,18 +100,19 @@
     <section id="home" class="slides">
         <ul class="slides-container">
             {{-- *Slider* --}}
-            @if(empty($sliderimages))
-                @for($x = 1; $x<4; $x++)
+            @if(!empty($home_contents))
+                @foreach($home_contents as $home_content)
                     <li>
-                        <img src="images/slides/slide{{$x}}.jpg" width="1280" height="647" alt="slide1"
+                        <img src="{!! asset('images/slides/'.$home_content->id.'.jpg') !!} " width="1280" height="647"
+                             alt="slide1"
                              class="img-responsive">
                         <div class="caption">
-                            <h2>Modern australian cuisine</h2>
-                            <p>INFLUENCED BY TRADITIONAL ARTISAN METHODS</p>
+                            <h2>{{$home_content->title}}</h2>
+                            <p>{{$home_content->sub_title}}</p>
                             <a href="#reservation" class="smooth-scroll btn btn-primary btn-sm">Book Your Table Now</a>
                         </div>
                     </li>
-                @endfor
+                @endforeach
             @endif
 
         </ul>
@@ -131,8 +130,11 @@
             <div class="container">
                 <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 history pull-right">
                     <h2>About us</h2>
-                    <h3>{{ '$about_us_title' }}</h3>
-                    {!! '$about_paragraph' !!}
+                    @if(!empty($about->title))
+                        <h3>{!! $about->title !!}</h3>
+                    @endif
+                    {!! $about->about !!}
+
                 </div>
             </div>
         </div>
@@ -145,30 +147,37 @@
             <div class="menu-table">
                 <!-- Menu tabs -->
                 <ul class="nav nav-tabs  menu-tabs" role="tablist">
-                    <li class="active">
-                        <a href="#soups-salads-appetizers" aria-controls="soups-salads-appetizers" role="tab"
-                           data-toggle="tab" class="icon icon-home"><span>Soups-Salads-Appetizers</span></a>
-                    </li>
-                    <li>
-                        <a href="#organic-pastas" aria-controls="prganic-pastas" role="tab" data-toggle="tab">Organic
-                            Pastas</a>
-                    </li>
-                    <li>
-                        <a href="#pizza" aria-controls="pizza" role="tab" data-toggle="tab">Pizza</a>
-                    </li>
-                    <li>
-                        <a href="#entrees" aria-controls="entrees" role="tab" data-toggle="tab">Entrees</a>
-                    </li>
-                    <li>
-                        <a href="#desserts" aria-controls="desserts" role="tab" data-toggle="tab">Desserts</a>
-                    </li>
+                    {{--<li class="active">--}}
+                    {{--<a href="#soups-salads-appetizers" aria-controls="soups-salads-appetizers" role="tab"--}}
+                    {{--data-toggle="tab" class="icon icon-home"><span>Soups-Salads-Appetizers</span></a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="#organic-pastas" aria-controls="prganic-pastas" role="tab" data-toggle="tab">Organic--}}
+                    {{--Pastas</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="#pizza" aria-controls="pizza" role="tab" data-toggle="tab">Pizza</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="#entrees" aria-controls="entrees" role="tab" data-toggle="tab">Entrees</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="#desserts" aria-controls="desserts" role="tab" data-toggle="tab">Desserts</a>--}}
+                    {{--</li>--}}
 
                     @if(!empty($menu_categories))
+                        <?php $x = 1 ?>
                         @foreach($menu_categories as $menu_category)
-                            <li class="active">
-                                <a href="#soups-salads-appetizers" aria-controls="soups-salads-appetizers" role="tab"
-                                   data-toggle="tab" class="icon icon-home"><span>Soups-Salads-Appetizers</span></a>
+                            <li class="{!! $x==1 ? 'active' : ''!!}">
+
+
+                                <a href="#{{strtolower(str_replace(' ','-', $menu_category->menu_category))}}"
+                                   aria-controls="soups-salads-appetizers"
+                                   role="tab"
+                                   data-toggle="tab"
+                                   class="icon icon-home"><span>{!! $menu_category->menu_category !!}</span></a>
                             </li>
+                            <?php $x++;?>
                         @endforeach
                     @endif
 
@@ -177,467 +186,25 @@
                 <!-- Menu Tab panes -->
                 <div class="tab-content">
 
-                    <div class="tab-pane active fade in" id="soups-salads-appetizers">
-                        <div class="row">
-                            <div class="menu-group">
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Crispy Risotto Balls</span>
-                                        <span class="menu-descp">mozzarella, Grana Padano, herb aioli, marinara</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 34
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Minestrone Soup</span>
-                                        <span class="menu-descp">cranberry beans, vegetables, Grana Padano</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 45
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item3.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Lentil Soup</span>
-                                        <span class="menu-descp">parmesan chicken broth, potato, bacon, Grana Padano, parsley</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 54
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item4.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Mixed Greens</span>
-                                        <span class="menu-descp">red wine vinaigrette, pears, walnuts, goat cheese</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 23
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item5.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Chopped Salad</span>
-                                        <span class="menu-descp">chickpea, green olive, pistachio, pepperoni, oregano, red wine vinaigrette, pecorino</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 46
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Orange Salad</span>
-                                        <span class="menu-descp">green olives, red onions, tarragon, extra virgin olive oil</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 64
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 hidden-xs">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-9">
-                                        <span class="menu-title">Shaved Kale</span>
-                                        <span class="menu-descp">creamy anchovy dressing, pecorino, bread crumbs</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-3">
-                                            <span class="menu-item-price">
-                                                $ 75
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade " id="organic-pastas">
-                        <div class="row">
-                            <div class="menu-group">
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Spaghetti Aglio e Olio</span>
-                                        <span class="menu-descp">olive oil, garlic, chili, Grana Padano (add anchovy 2.00)</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 54
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Chitarra al Pomodoro</span>
-                                        <span class="menu-descp">tomatoes, garlic, basil, Grana Padano</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 87
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item3.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Pappardelle</span>
-                                        <span class="menu-descp">smoked pork, mascarpone, apples</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 45
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item4.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Pistachio Ravioli</span>
-                                        <span class="menu-descp">pistachio, mint, lemon brown butter, Grana Padano</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 43
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item5.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Garganelli</span>
-                                        <span class="menu-descp">braised beef, olives, gremolata, Grana Padano</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 43
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Italian Ramen</span>
-                                        <span class="menu-descp">spaghettini, soft cooked egg, chicken, basil, Grana Padano</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 87
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Lasagna Bianca</span>
-                                        <span class="menu-descp">béchamel, butternut squash, onion, fontina, brown butter, sage</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 78
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade " id="pizza">
-                        <div class="row">
-                            <div class="menu-group">
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Margherita</span>
-                                        <span class="menu-descp">tomato, mozzarella, basil</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 38
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Pastaria Marinara</span>
-                                        <span class="menu-descp">tomato, onion, garlic, oregano, basil, pecorino (very minimal cheese)</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 48
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item3.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Pappardelle</span>
-                                        <span class="menu-descp">smoked pork, mascarpone, apples</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 73
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item4.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Four Cheese</span>
-                                        <span class="menu-descp">mozzarella, fontina, gorgonzola dolce, Grana Padano (no tomato)</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 48
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item5.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Fennel Salami</span>
-                                        <span class="menu-descp">tomato, mozzarella</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 43
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">The Holmes</span>
-                                        <span class="menu-descp">tomato, mozzarella, mushroom, prosciutto, oregano, Grana Padano</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 75
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Sweet Potato</span>
-                                        <span class="menu-descp">béchamel, fontina, red onion, lemon zest, herbs</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 38
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade " id="entrees">
-                        <div class="row">
-                            <div class="menu-group">
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Wood Oven Roasted Chicken</span>
-                                        <span class="menu-descp">roasted cauliflower, potato, lemon,caper, parsley</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 70
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Red Wine Braised Beef</span>
-                                        <span class="menu-descp">creamy corn polenta, roasted baby carrots, parsley</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 30
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item3.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Wood Oven Roasted Salmon</span>
-                                        <span class="menu-descp">fennel confit, farro, zucchini, calabrian chili, preserved lemon</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 49
-                                            </span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="desserts">
-                        <div class="row">
-                            <div class="menu-group">
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item1.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Mama Rodolico’s Tiramisu</span>
-                                        <span class="menu-descp">roasted cauliflower, potato, lemon,caper, parsley</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 53
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item2.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Dark Chocolate Tart</span>
-                                        <span class="menu-descp">whipped cream and candied hazelnuts</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 37
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item3.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Yoghurt Panna Cotta</span>
-                                        <span class="menu-descp">cherry compote</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 73
-                                            </span>
-                                    </div>
-                                </div>
-
-                                <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
-                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                        <img src="images/item3.jpg" alt="" class="img-circle">
-                                    </div>
-                                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                        <span class="menu-title">Cannoli</span>
-                                        <span class="menu-descp">pastry cream with strawberry balsamic and salted pistachios</span>
-                                    </div>
-                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                                            <span class="menu-item-price">
-                                                $ 48
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     @if(!empty($menu_categories))
+                        <?php $x = 1?>
                         @foreach($menu_categories as $menu_category)
-                            <div class="tab-pane" id="desserts">
+                            <div class="tab-pane {!! $x==1 ? 'active' : ''!!}"
+                                 id="{{strtolower(str_replace(' ','-', $menu_category->menu_category))}}">
                                 <div class="row">
                                     <div class="menu-group">
 
                                         @foreach($menu_category->menuItems as $menu_item)
                                             <div class="menu-group-item clearfix col-lg-6 col-md-6 col-sm-12">
                                                 <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                                                    <img src="{!! asset('images/menuitem'.$menu_item->id.'.jpg') !!}" alt=""
+                                                    <img style="width: 100px;"
+                                                         src="{!! asset('images/menu/'.$menu_item->id.'.jpg') !!}"
+                                                         alt=""
                                                          class="img-circle">
                                                 </div>
                                                 <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
-                                                    <span class="menu-title">{!! $menu_item->title !!}</span>
+                                                    <span class="menu-title">{!! $menu_item->item !!}</span>
                                                     <span class="menu-descp">{!! $menu_item->description !!}</span>
                                                 </div>
                                                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
@@ -651,6 +218,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php $x++;?>
                         @endforeach
                     @endif
 
@@ -663,108 +231,76 @@
     <section id="gallery" class="gallery">
         <h2>Gallery</h2>
         <div class="flex-images">
-            <figure class="item" data-w="400" data-h="267">
-                <a href="images/gallery/large/1.jpg">
-                    <img src="images/gallery/thumb/1.jpg" alt="" title="Image title 1"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="267" data-h="400">
-                <a href="images/gallery/large/2.jpg">
-                    <img src="images/gallery/thumb/2.jpg" alt="" title="Image title 2"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="267" data-h="400">
-                <a href="images/gallery/large/3.jpg">
-                    <img src="images/gallery/thumb/3.jpg" alt="" title="Image title 3"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="400" data-h="300">
-                <a href="images/gallery/large/4.jpg">
-                    <img src="images/gallery/thumb/4.jpg" alt="" title="Image title 4"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="300" data-h="350">
-                <a href="images/gallery/large/5.jpg">
-                    <img src="images/gallery/thumb/5.jpg" alt="" title="Image title 5"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="400" data-h="300">
-                <a href="images/gallery/large/6.jpg">
-                    <img src="images/gallery/thumb/6.jpg" alt="" title="Image title 6"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="267" data-h="400">
-                <a href="images/gallery/large/7.jpg">
-                    <img src="images/gallery/thumb/7.jpg" alt="" title="Image title 7"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="400" data-h="267">
-                <a href="images/gallery/large/8.jpg">
-                    <img src="images/gallery/thumb/8.jpg" alt="" title="Image title 8"/>
-                </a>
-            </figure>
-            <figure class="item" data-w="400" data-h="267">
-                <a href="images/gallery/large/9.jpg">
-                    <img src="images/gallery/thumb/9.jpg" alt="" title="Image title 9"/>
-                </a>
-            </figure>
+            @if(!empty($gallery_images))
+                @foreach($gallery_images as $gallery_image)
+                    <figure class="item" data-w="300" data-h="200">
+                        <a href="{{asset('images/gallery/large/'.$gallery_image->id.'.jpg')}}">
+                            <img src="{{asset(('images/gallery/thumb/'.$gallery_image->id.'.jpg'))}}" alt=""
+                            />
+                        </a>
+                    </figure>
+                @endforeach
+            @endif
+
         </div>
-    </section> <!-- Gallery section ends -->
+    </section>
+    <!-- Gallery section ends -->
 
     <!-- Blog section starts -->
-    <section id="blog">
-        <h2>Blog</h2>
-        <div class="container">
-            <div class="row">
-                <!-- Blog post 1 -->
-                <div class="col-sm-4 col-md-4">
-                    <div class="post">
-                        <div class="post-img-content">
-                            <a href="#"><img src="images/post-thumb-1.jpg" class="img-responsive" alt="post-thumb"/></a>
-                        </div>
-                        <div class="content">
-                            <h4><a href="#">Aenean lobortis dolor a diam molestie </a></h4>
-                            <small class="text-muted date">posted on January 20th, 2014</small>
-                            <p>Morbi eget posuere dolor. Pellentesque ame cursus aliquet aliquet. Aeneanet felis
-                                sit.</p>
-                        </div>
-                    </div>
-                </div>
+    {{--<section id="blog">--}}
+    {{--<h2>Blog</h2>--}}
+    {{--<div class="container">--}}
+    {{--<div class="row">--}}
+    {{--<!-- Blog post 1 -->--}}
+    {{--<div class="col-sm-4 col-md-4">--}}
+    {{--<div class="post">--}}
+    {{--<div class="post-img-content">--}}
+    {{--<a href="#"><img src="images/post-thumb-1.jpg" class="img-responsive" alt="post-thumb"/></a>--}}
+    {{--</div>--}}
+    {{--<div class="content">--}}
+    {{--<h4><a href="#">Aenean lobortis dolor a diam molestie </a></h4>--}}
+    {{--<small class="text-muted date">posted on January 20th, 2014</small>--}}
+    {{--<p>Morbi eget posuere dolor. Pellentesque ame cursus aliquet aliquet. Aeneanet felis--}}
+    {{--sit.</p>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
 
-                <!-- Blog post 2 -->
-                <div class="col-sm-4 col-md-4">
-                    <div class="post">
-                        <div class="post-img-content">
-                            <a href="#"><img src="images/post-thumb-2.jpg" class="img-responsive" alt="post-thumb"/></a>
-                        </div>
-                        <div class="content">
-                            <h4><a href="#">Nunc quis velit sed mauris egestas pretium</a></h4>
-                            <small class="text-muted date">posted on January 20th, 2014</small>
-                            <p>
-                                Morbi eget posuere dolor. Pellentesque ame cursus aliquet aliquet. Aeneanet felis sit.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    {{--<!-- Blog post 2 -->--}}
+    {{--<div class="col-sm-4 col-md-4">--}}
+    {{--<div class="post">--}}
+    {{--<div class="post-img-content">--}}
+    {{--<a href="#"><img src="images/post-thumb-2.jpg" class="img-responsive" alt="post-thumb"/></a>--}}
+    {{--</div>--}}
+    {{--<div class="content">--}}
+    {{--<h4><a href="#">Nunc quis velit sed mauris egestas pretium</a></h4>--}}
+    {{--<small class="text-muted date">posted on January 20th, 2014</small>--}}
+    {{--<p>--}}
+    {{--Morbi eget posuere dolor. Pellentesque ame cursus aliquet aliquet. Aeneanet felis sit.--}}
+    {{--</p>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
 
-                <!-- Blog post 3 -->
-                <div class="col-sm-4 col-md-4">
-                    <div class="post">
-                        <div class="post-img-content">
-                            <a href="#"><img src="images/post-thumb-3.jpg" class="img-responsive" alt="post-thumb"/></a>
-                        </div>
-                        <div class="content">
-                            <h4><a href="#">Nunc eu massa vitae est dignissim faucibus</a></h4>
-                            <small class="text-muted date">posted on January 20th, 2014</small>
-                            <p>
-                                Morbi eget posuere dolor. Pellentesque ame cursus aliquet aliquet. Aeneanet felis sit.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> <!-- Blog section ends -->
+    {{--<!-- Blog post 3 -->--}}
+    {{--<div class="col-sm-4 col-md-4">--}}
+    {{--<div class="post">--}}
+    {{--<div class="post-img-content">--}}
+    {{--<a href="#"><img src="images/post-thumb-3.jpg" class="img-responsive" alt="post-thumb"/></a>--}}
+    {{--</div>--}}
+    {{--<div class="content">--}}
+    {{--<h4><a href="#">Nunc eu massa vitae est dignissim faucibus</a></h4>--}}
+    {{--<small class="text-muted date">posted on January 20th, 2014</small>--}}
+    {{--<p>--}}
+    {{--Morbi eget posuere dolor. Pellentesque ame cursus aliquet aliquet. Aeneanet felis sit.--}}
+    {{--</p>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</section> --}}
+    <!-- Blog section ends -->
 
     <!-- Reservation section starts -->
     <section id="reservation" class="clearfix reservation">
@@ -772,8 +308,7 @@
             <div class="container">
                 <div class="col-sm-6 f-n center-block">
                     <h2>Make a reservation</h2>
-                    <p>Non vel adipiscing placerat aliquam! Dolor? Et, hac turpis a et! Enim rhoncus adipiscing
-                        porttitor dolor sed, placerat turpis elementum placerat, turpis.</p>
+
                 </div>
             </div>
         </div>
@@ -866,9 +401,9 @@
                 <h2>Contact</h2>
                 <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem
                     neque sed ipsum. Nam quam nunc.</p>
-                <div class="contact-phone"><i class="icon icon-phone"></i> +0012 345 6789</div>
-                <div class="contact-email"><i class="icon icon-envelope"></i> hungry@123website.com</div>
-                <div class="contact-addresss"><i class="icon icon-restaurant"></i> 18, Stomach Ave. Foodville, USA</div>
+                <div class="contact-phone"><i class="icon icon-phone"></i> {!! $contact->tel !!}</div>
+                <div class="contact-email"><i class="icon icon-envelope"></i> {!! $contact->email !!}</div>
+                <div class="contact-addresss"><i class="icon icon-restaurant"></i> {!! $contact->address !!}</div>
             </div>
         </div>
     </section> <!-- Contact section ends -->
@@ -876,7 +411,7 @@
     <!-- Footer starts -->
     <footer>
         <div class="container">
-            <p>© Copyright 2015 Prasto. All Rights Reserved.</p>
+            <p>© Copyright {!! date('Y') !!} Randholee. All Rights Reserved.</p>
         </div>
     </footer> <!-- Footer ends -->
 </div> <!-- Main body ends -->
@@ -950,6 +485,4 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
 
-
-<!-- Mirrored from demo.jmkumaresh.com/prasto/preview/001/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 08 May 2016 02:53:04 GMT -->
 </html>

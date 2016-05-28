@@ -1,14 +1,18 @@
 @extends('control-panel.layout.master')
 
 
+{{--
+
 @section('styles')
-    <link rel="stylesheet" href="{!! asset('control-panel-assets/plugins/summernote/summernote.min.css') !!}">
+
 @endsection
+
+--}}
 
 
 
 @section('page-title')
-    Menu Categories
+    Gallery Images
 @endsection
 
 
@@ -26,13 +30,15 @@
 
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">About Us</h3>
+                    <h3 class="panel-title">Menu Items</h3>
 
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::open(['route'=> ['control-panel.menu-categories.store'], 'method'=>'post']) !!}
-                        @include('control-panel.menu-categories._partials.form')
+                    {!! Form::open(['route'=> ['control-panel.gallery-images.store'], 'method'=>'post', 'files'=>'true']) !!}
+                        @include('control-panel.gallery-images._partials.form')
+                    <button class="btn btn-primary " type="submit">Create</button>
+
                     {!! Form::close() !!}
                 </div>
 
@@ -41,10 +47,10 @@
         <div class="col-md-8">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Menu Category List</h3>
+                    <h3 class="panel-title">Menu fItem List</h3>
                 </div>
                 <div class="panel-body">
-                    @include('control-panel.menu-categories._partials.menu-category-list')
+                    @include('control-panel.gallery-images._partials.list')
                 </div>
             </div>
         </div>
@@ -55,8 +61,6 @@
 
 
 @section('scripts')
-    <script src="{!! asset('control-panel-assets/plugins/summernote/summernote.min.js') !!}"></script>
-    <script type="text/javascript">
-        $('.summernote').summernote({height: 250});
-    </script>
+
+
 @stop

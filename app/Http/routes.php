@@ -13,7 +13,19 @@
 
 Route::get('/', function () {
     $menu_categories = \App\MenuCategory::all();
-    return view('index', compact('menu_categories'));
+    $home_contents = \App\HomeContent::all();
+    $gallery_images = \App\GalleryImage::all();
+    $about = \App\About::findorFail(1);
+    $contact = \App\contact::findorFail(1);
+
+    return view('index', compact
+    (
+        'menu_categories',
+        'home_contents',
+        'gallery_images',
+        'about',
+        'contact'
+    ));
 });
 
 Route::group(['prefix' => 'control-panel'], function () {
@@ -24,7 +36,10 @@ Route::group(['prefix' => 'control-panel'], function () {
 
 
     Route::resource('/about-us', 'AboutController');
+    Route::resource('/contact', 'ContactsController');
     Route::resource('menu-categories', 'MenuCategoriesController');
     Route::resource('menu-items', 'MenuItemsController');
+    Route::resource('home-contents', 'HomeContentsController');
+    Route::resource('gallery-images', 'GalleryController');
 
 });

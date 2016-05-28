@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::model($menu_item, ['route'=> ['control-panel.menu-items.update',$menu_item->id], 'method'=>'patch']) !!}
+                    {!! Form::model($menu_item, ['route'=> ['control-panel.menu-items.update',$menu_item->id], 'method'=>'patch', 'files'=>'true']) !!}
                         @include('control-panel.menu-items._partials.form')
                     <button class="btn btn-primary " type="submit">Update</button>
                     <a href="{!! route('control-panel.menu-items.index') !!}" class="btn btn-warning" type="submit">Cancel</a>

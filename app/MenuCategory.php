@@ -13,7 +13,7 @@ class MenuCategory extends Model
 
     public function menuItems()
     {
-        return $this->hasMany('App\ItemCategories');
+        return $this->hasMany('App\MenuItem');
     }
 
 }

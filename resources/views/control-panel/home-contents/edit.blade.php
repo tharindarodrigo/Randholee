@@ -26,16 +26,16 @@
 
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Menu Cateogories - Edit</h3>
+                    <h3 class="panel-title">Home Contents - Edit</h3>
 
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::model($menu_category, ['route'=> ['control-panel.menu-categories.update',$menu_category->id],
-                    'method'=>'patch']) !!}
-                    @include('control-panel.menu-categories._partials.form')
+                    {!! Form::model($home_content, ['route'=> ['control-panel.home-contents.update',$home_content->id],
+                    'method'=>'patch' , 'files'=> 'true']) !!}
+                    @include('control-panel.home-contents._partials.form')
                     <button class="btn btn-primary " type="submit">Submit</button>
-                    <a href="{!! route('control-panel.menu-categories.index') !!}" class="btn btn-warning" type="submit">Cancel</a>
+                    <a href="{!! route('control-panel.home-contents.index') !!}" class="btn btn-warning" type="submit">Cancel</a>
                     {!! Form::close() !!}
                 </div>
 
@@ -44,10 +44,10 @@
         <div class="col-md-8">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Menu Category List</h3>
+                    <h3 class="panel-title">Home Contents List</h3>
                 </div>
                 <div class="panel-body">
-                    @include('control-panel.menu-categories._partials.menu-category-list')
+                    @include('control-panel.home-contents._partials.list')
                 </div>
             </div>
         </div>

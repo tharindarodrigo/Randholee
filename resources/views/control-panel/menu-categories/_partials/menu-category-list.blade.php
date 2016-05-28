@@ -15,10 +15,10 @@
                     <td>{!! $menu_category->menu_category!!}</td>
                     <td>
                         <div class="btn-group">
-                            {!! Form::open(['route'=>['control-panel.menu-categories.edit',$menu_category->id],
-                            'method'=>'get']) !!}
-                            <button class="btn btn-edit" type="edit"><span class="fa fa-edit"></span></button>
-                            <button class="btn btn-danger" type="button"><span class="fa fa-trash"></span></button>
+                            {!! Form::open(['route'=>['control-panel.menu-categories.destroy',$menu_category->id],
+                            'method'=>'delete']) !!}
+                            <a href="{!! route('control-panel.menu-categories.edit', $menu_category->id) !!}" class="btn btn-primary" type="button"><span class="fa fa-edit"></span></a>
+                            <button class="btn btn-danger" type="submit"><span class="fa fa-trash"></span></button>
                             {!! Form::close() !!}
                         </div>
                     </td>
