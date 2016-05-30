@@ -50,11 +50,11 @@ class GalleryController extends Controller
         $gallery_image->title = $request->get('title');
 
         if ($gallery_image->save()) {
-            $img->save(public_path() . '/images/gallery/large/' . $gallery_image->id . '.jpg')
+            $img->save('images/gallery/large/' . $gallery_image->id . '.jpg')
                 ->resize($w, $h, function ($constraint) {
                     $constraint->aspectRatio();
                 })
-                ->save(public_path() . '/images/gallery/thumb/' . $gallery_image->id . '.jpg');
+                ->save('images/gallery/thumb/' . $gallery_image->id . '.jpg');
 
             return redirect()->back();
         }

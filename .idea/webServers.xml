@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b649fa81-3227-43d3-a8f4-3fad5c22ddbd" name="randholee" url="http://brightron.net">
+        <fileTransfer host="brightron.net" port="22" accessType="SFTP" password="dfeddfcfdfdedfc7dfcfdfc3dfc4dfd9dfc3dfcedfcfdf9bdf98df99" username="brightron">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

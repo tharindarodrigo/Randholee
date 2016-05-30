@@ -395,6 +395,7 @@
 
     <!-- Contact section starts -->
     <section id="contact">
+        {{--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247.79819530939216!2d79.99819676318627!3d6.423446101168058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x73eb23836d04976e!2sRandholee!5e0!3m2!1sen!2slk!4v1464551610835" frameborder="0" style="border:0" allowfullscreen></iframe>--}}
         <div id="map" class="hidden-xs"></div>
         <div class="container">
             <div class="contact-details">
@@ -451,35 +452,35 @@
 <script src="{{ asset('js/jQuery-flexImages/jquery.flex-images.min.js')}}"></script>
 
 <!-- Off Canvas Navigation -->
-<script type="text/javascript" src="js/pushy/pushy.js"></script>
+<script src="{{asset('js/pushy/pushy.js')}}"></script>
 
 <!-- Smooth one page scroll -->
 <script src="{{ asset('js/jquery-one-page-nav/jquery.nav.js')}}"></script>
 
 <!-- Google Map -->
-<script type="text/javascript" src="{{ asset('https://maps.googleapis.com/maps/api/js?sensor=false')}}"></script>
+<script type="text/javascript" src="{{ asset('https://maps.googleapis.com/maps/api/js?AIzaSyCK3xEfuwiBB-zAl9UMRKn_BnDZn0X3h1U')}}"></script>
 
 <!-- Prasto plugins -->
 <script src="{{ asset('js/main.js')}}"></script>
 
 <!-- Google Analytics -->
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '../../../../www.google-analytics.com/analytics.js', 'ga');
+{{--<script>--}}
+    {{--(function (i, s, o, g, r, a, m) {--}}
+        {{--i['GoogleAnalyticsObject'] = r;--}}
+        {{--i[r] = i[r] || function () {--}}
+                    {{--(i[r].q = i[r].q || []).push(arguments)--}}
+                {{--}, i[r].l = 1 * new Date();--}}
+        {{--a = s.createElement(o),--}}
+                {{--m = s.getElementsByTagName(o)[0];--}}
+        {{--a.async = 1;--}}
+        {{--a.src = g;--}}
+        {{--m.parentNode.insertBefore(a, m)--}}
+    {{--})(window, document, 'script', '../../../../www.google-analytics.com/analytics.js', 'ga');--}}
 
-    ga('create', 'UA-33462071-1', 'auto');
-    ga('send', 'pageview');
+    {{--ga('create', 'UA-33462071-1', 'auto');--}}
+    {{--ga('send', 'pageview');--}}
 
-</script>
+{{--</script>--}}
 
 <!-- End Document
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->

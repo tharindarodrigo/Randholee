@@ -41,7 +41,7 @@ class MenuItemsController extends Controller
                     ->resize(100, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })
-                    ->save(public_path() . '/images/menu/' . $menu_item->id . '.jpg');
+                    ->save('images/menu/' . $menu_item->id . '.jpg');
             }
         }
 
@@ -73,7 +73,7 @@ class MenuItemsController extends Controller
                     ->resize(100, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })
-                    ->save(public_path() . '/images/menu/' . $menu_item->id . '.jpg');
+                    ->save('images/menu/' . $menu_item->id . '.jpg');
             }
         }
 
@@ -90,14 +90,14 @@ class MenuItemsController extends Controller
         }
 
         if ($menu_item->delete()) {
-            if (file_exists(public_path() . '/images/menu/' . $id . '.jpg')) {
-                unlink(public_path() . '/images/menu/' . $id . '.jpg');
+            if (file_exists('images/menu/' . $id . '.jpg')) {
+                unlink('images/menu/' . $id . '.jpg');
             }
 
             $request->session()->flash('global', "Record deleted successfully");
 
         }
 
-        return redirect()->back();
+        return $this->index();
     }
 }

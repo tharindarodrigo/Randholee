@@ -27,8 +27,11 @@ Route::get('/', function () {
         'contact'
     ));
 });
+Route::auth();
 
-Route::group(['prefix' => 'control-panel'], function () {
+Route::get('/home', 'HomeController@index');
+
+Route::group(['prefix' => 'control-panel', 'middleware'=>'auth'], function () {
 
     Route::get('/', function () {
         return view('control-panel.welcome');

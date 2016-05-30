@@ -33,6 +33,7 @@
                 <div class="panel-body">
                     {!! Form::open(['route'=> ['control-panel.menu-categories.store'], 'method'=>'post']) !!}
                         @include('control-panel.menu-categories._partials.form')
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     {!! Form::close() !!}
                 </div>
 

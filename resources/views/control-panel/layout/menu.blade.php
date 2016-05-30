@@ -8,48 +8,57 @@
 
                 <!--Menu list item-->
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('control-panel.home-contents.index')}}">
                         <i class="fa fa-dashboard"></i>
-						                    <span class="menu-title">
-												<strong>Home</strong>
-												<span class="label label-success pull-right">Top</span>
-											</span>
+                        <span class="menu-title">
+                            <strong>Home</strong>
+                            <span class="label label-success pull-right">Top</span>
+                        </span>
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('control-panel.about-us.index')}}">
                         <i class="fa fa-dashboard"></i>
-						                    <span class="menu-title">
-												<strong>About Us</strong>
-												<span class="label label-success pull-right">Top</span>
-											</span>
+                        <span class="menu-title">
+                            <strong>About Us</strong>
+                            <span class="label label-success pull-right">Top</span>
+                        </span>
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('control-panel.menu-categories.index')}}">
                         <i class="fa fa-dashboard"></i>
-						                    <span class="menu-title">
-												<strong>Menu</strong>
-												<span class="label label-success pull-right">Top</span>
-											</span>
+                        <span class="menu-title">
+                            <strong>Menu Categories</strong>
+                            <span class="label label-success pull-right">Top</span>
+                        </span>
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('control-panel.menu-items.index')}}">
                         <i class="fa fa-dashboard"></i>
-						                    <span class="menu-title">
-												<strong>Gallery</strong>
-												<span class="label label-success pull-right">Top</span>
-											</span>
+                        <span class="menu-title">
+                            <strong>Menu Items</strong>
+                            <span class="label label-success pull-right">Top</span>
+                        </span>
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="{{route('control-panel.gallery-images.index')}}">
                         <i class="fa fa-dashboard"></i>
-						                    <span class="menu-title">
-												<strong>Contact Us</strong>
-												<span class="label label-success pull-right">Top</span>
-											</span>
+                        <span class="menu-title">
+                            <strong>Gallery</strong>
+                            <span class="label label-success pull-right">Top</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('control-panel.gallery-images.index')}}">
+                        <i class="fa fa-dashboard"></i>
+                        <span class="menu-title">
+                            <strong>Gallery</strong>
+                            <span class="label label-success pull-right">Top</span>
+                        </span>
                     </a>
                 </li>
 
@@ -57,9 +66,9 @@
                 <li>
                     <a href="#">
                         <i class="fa fa-th"></i>
-						                    <span class="menu-title">
-												<strong>Layouts</strong>
-											</span>
+                        <span class="menu-title">
+                            <strong>Layouts</strong>
+                        </span>
                         <i class="arrow"></i>
                     </a>
 
