@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
-    <title>Prasto - Premium Restaurant HTML Theme</title>
+    <title>Randholee</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -400,8 +400,8 @@
         <div class="container">
             <div class="contact-details">
                 <h2>Contact</h2>
-                <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem
-                    neque sed ipsum. Nam quam nunc.</p>
+                {{--<p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem--}}
+                    {{--neque sed ipsum. Nam quam nunc.</p>--}}
                 <div class="contact-phone"><i class="icon icon-phone"></i> {!! $contact->tel !!}</div>
                 <div class="contact-email"><i class="icon icon-envelope"></i> {!! $contact->email !!}</div>
                 <div class="contact-addresss"><i class="icon icon-restaurant"></i> {!! $contact->address !!}</div>

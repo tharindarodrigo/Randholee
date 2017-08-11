@@ -31,7 +31,7 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'control-panel', 'middleware'=>'auth'], function () {
+Route::group(['prefix' => 'control-panel'], function () {
 
     Route::get('/', function () {
         return view('control-panel.welcome');
@@ -46,3 +46,7 @@ Route::group(['prefix' => 'control-panel', 'middleware'=>'auth'], function () {
     Route::resource('gallery-images', 'GalleryController');
 
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
